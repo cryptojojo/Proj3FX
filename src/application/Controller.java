@@ -1,5 +1,6 @@
 package application;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.PriorityQueue;
@@ -7,15 +8,44 @@ import java.util.Random;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 public class Controller {
 
 	@FXML
 	private Button submitButton;
 	@FXML
+	private Button execute;
+	@FXML
 	private TextField numOfFloors;
+
+	@FXML
+	protected void handleAbout(ActionEvent event) {
+
+		Stage about = new Stage();
+
+		about.getIcons().add(new Image("file:icon.png"));
+		about.setTitle("About Elevator App");
+		FXMLLoader appLoad = new FXMLLoader(getClass().getResource("about.fxml"));
+		Parent root = null;
+		try {
+			root = appLoad.load();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Scene scene = new Scene(root);
+		about.setScene(scene);
+
+		about.show();
+
+	}
 
 	@FXML
 	protected void handleSubmit(ActionEvent event) {

@@ -11,37 +11,7 @@
 	<children>
 		<MenuBar prefHeight="0.0" prefWidth="629.0" VBox.vgrow="NEVER">
 			<menus>
-				<Menu mnemonicParsing="false" text="File">
-					<items>
-						<MenuItem mnemonicParsing="false" text="New" />
-						<MenuItem mnemonicParsing="false" text="Open…" />
-						<Menu mnemonicParsing="false" text="Open Recent" />
-						<SeparatorMenuItem mnemonicParsing="false" />
-						<MenuItem mnemonicParsing="false" text="Close" />
-						<MenuItem mnemonicParsing="false" text="Save" />
-						<MenuItem mnemonicParsing="false" text="Save As…" />
-						<MenuItem mnemonicParsing="false" text="Revert" />
-						<SeparatorMenuItem mnemonicParsing="false" />
-						<MenuItem mnemonicParsing="false" text="Preferences…" />
-						<SeparatorMenuItem mnemonicParsing="false" />
-						<MenuItem mnemonicParsing="false" text="Quit" />
-					</items>
-				</Menu>
-				<Menu mnemonicParsing="false" text="Edit">
-					<items>
-						<MenuItem mnemonicParsing="false" text="Undo" />
-						<MenuItem mnemonicParsing="false" text="Redo" />
-						<SeparatorMenuItem mnemonicParsing="false" />
-						<MenuItem mnemonicParsing="false" text="Cut" />
-						<MenuItem mnemonicParsing="false" text="Copy" />
-						<MenuItem mnemonicParsing="false" text="Paste" />
-						<MenuItem mnemonicParsing="false" text="Delete" />
-						<SeparatorMenuItem mnemonicParsing="false" />
-						<MenuItem mnemonicParsing="false" text="Select All" />
-						<MenuItem mnemonicParsing="false" text="Unselect All" />
-					</items>
-				</Menu>
-				<Menu mnemonicParsing="false" text="About">
+				<Menu fx:id="about" mnemonicParsing="false" onAction="#handleAbout" text="About">
 					<items>
 						<MenuItem mnemonicParsing="false" text="About Elevator" />
 					</items>
@@ -61,6 +31,7 @@
 						<Font size="16.0" />
 					</font>
 				</Button>
+            <Button fx:id="execute" layoutX="470.0" layoutY="315.0" mnemonicParsing="false" onAction="#executeMain" text="Execute" />
 			</children>
 		</Pane>
 	</children>

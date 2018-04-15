@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 
 public class Main extends Application {
 
@@ -20,6 +21,7 @@ public class Main extends Application {
 
 		// just load fxml file and display it in the stage:
 
+		primaryStage.getIcons().add(new Image("file:icon.png"));
 		primaryStage.setTitle("Elevator App");
 		FXMLLoader appLoad = new FXMLLoader(getClass().getResource("application.fxml"));
 		Parent root = appLoad.load();

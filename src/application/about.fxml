@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="400.0" prefWidth="959.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="400.0" prefWidth="1004.0" VBox.vgrow="ALWAYS">
+			<children>
+				<Label layoutX="96.0" layoutY="14.0" prefHeight="25.0" prefWidth="768.0" text="This app was created by Joseph Miller and Devin Timaul for Scott Kerlin's HCI course as Augsburg University">
+					<font>
+						<Font size="16.0" />
+					</font>
+				</Label>
+				<Label layoutX="422.0" layoutY="39.0" text="Course: CSC 395">
+					<font>
+						<Font size="16.0" />
+					</font>
+				</Label>
+				<Label layoutX="274.0" layoutY="64.0" text="Implements Scott's elevator code, description is as follows:">
+					<font>
+						<Font size="16.0" />
+					</font>
+				</Label>
+				<Label layoutX="14.0" layoutY="117.0" prefHeight="245.0" prefWidth="946.0" text="You have a long, narrow elevator with only one door.  The design of the elevator makes it impossible for people in the elevator to pass each other, &#10;but the elevator is very deep and can hold 20 people.  As such, in order for someone in the back (side furthest from the door) of the elevator to leave &#10;the elevator, everyone else in the elevator must first exist.  This is very inconvenient for the everyone involved.  Corporate has proposed that instead &#10;of everyone getting off and on the elevator every time someone in the back needs to get off the elevator, only the person at the front (nearest the &#10;door side) is allowed to get off the elevator.  (NOTE: If the first n people all want to get off at the current floor, they can.  But once the current &quot;top&quot; of &#10;the stack is a person who does NOT want to exit the elevator, no one else can exit the elevator at this time.)  Additionally, Corporate as dictated that on &#10;a given floor stop, all allowable &quot;pop&quot; operations must occur before any &quot;push&quot; operations. Management has also decided that they should get to select &#10;certain people (VIPs) who get to &quot;bypass&quot; the regular queue and get onto the elevators first!">
+					<font>
+						<Font size="14.0" />
+					</font>
+				</Label>
+			</children>
+		</AnchorPane>
+	</children>
+</VBox>
