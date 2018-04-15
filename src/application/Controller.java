@@ -30,6 +30,8 @@ public class Controller {
 	private TextField numOfRidersMin;
 	@FXML
 	private TextField numOfRidersMax;
+	@FXML
+	private TextField vip;
 
 	// text output to GUI
 	@FXML
@@ -78,6 +80,14 @@ public class Controller {
 			textOutput += "NEED AN ENTRY FOR NUMBER OF RIDERS MAXIMUM\n";
 			notFilled = true;
 		}
+		if(vip.getText().isEmpty()) {
+			textOutput += "NEED AN ENTRY FOR PERCENTAGE OF VIPS\n";
+			notFilled = true;
+		}
+		if(vip.getText().isEmpty()) {
+			textOutput += "NEED AN ENTRY FOR PERCENTAGE OF VIPS\n";
+			notFilled = true;
+		}
 
 		if (notFilled) {
 			output.setText(textOutput);
@@ -105,7 +115,9 @@ public class Controller {
 		Collections.shuffle(riders);
 
 		// Make VIPs
-		for (int i = 0; i < riders.size() / 10; i++) {
+
+		float vipF = Integer.parseInt(vip.getText()) / 100;
+		for (int i = 0; i < riders.size() * vipF; i++) {
 			riders.get(i).promote();
 		}
 
