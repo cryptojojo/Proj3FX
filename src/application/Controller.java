@@ -12,18 +12,30 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Controller {
 
+	// submit button
 	@FXML
 	private Button submitButton;
-	@FXML
-	private Button execute;
+
+	// text fields
 	@FXML
 	private TextField numOfFloors;
+	@FXML
+	private TextField numOfRidersMin;
+	@FXML
+	private TextField numOfRidersMax;
+
+	// text output to GUI
+	@FXML
+	private TextArea output;
+
+	private String textOutput = "";
 
 	@FXML
 	protected void handleAbout(ActionEvent event) {
@@ -50,12 +62,34 @@ public class Controller {
 	@FXML
 	protected void handleSubmit(ActionEvent event) {
 
-		System.out.println(numOfFloors.getText());
+		// check that everything is filled out
 
-	}
+		Boolean notFilled = false;
 
-	@FXML
-	protected void executeMain(ActionEvent event) {
+		if (numOfFloors.getText().isEmpty()) {
+			textOutput += "NEED AN ENTRY FOR NUMBER OF FLOORS\n";
+			notFilled = true;
+		}
+		if (numOfRidersMin.getText().isEmpty()) {
+			textOutput += "NEED AN ENTRY FOR NUMBER OF RIDERS MINIMUM\n";
+			notFilled = true;
+		}
+		if (numOfRidersMax.getText().isEmpty()) {
+			textOutput += "NEED AN ENTRY FOR NUMBER OF RIDERS MAXIMUM\n";
+			notFilled = true;
+		}
+
+		if (notFilled) {
+			output.setText(textOutput);
+			textOutput = "";
+			return;
+		}
+
+		//
+		//
+		// SCOTTS CODE
+		//
+		//
 
 		// Setup Building
 		PriorityQueue<ElevatorRider>[] building = new PriorityQueue[5];
@@ -120,6 +154,9 @@ public class Controller {
 				elevator.setCurrentFloor(1);
 
 			System.out.println("ELEVATOR AT END: " + elevator);
+
+			textOutput += "ELEVATOR AT END: " + elevator + '\n';
+
 		} while (currentRider < riders.size() || elevator.peek() != null || building[0].peek() != null);
 
 		// Output
@@ -135,10 +172,17 @@ public class Controller {
 		}
 
 		System.out.println("AM MODE:\n   Average (MEAN) Frustration Level is: " + ((double) result / riders.size()));
+		textOutput += "AM MODE:\n   Average (MEAN) Frustration Level is: " + ((double) result / riders.size()) + '\n';
+
 		System.out.println(
 				"AM MODE:\n   Average (MEAN) VIP Frustration Level is: " + ((double) resultVIP / (riders.size() / 10)));
+		textOutput += "AM MODE:\n   Average (MEAN) VIP Frustration Level is: "
+				+ ((double) resultVIP / (riders.size() / 10)) + '\n';
+
 		System.out.println("AM MODE:\n   Average (MEAN) Non-VIP Frustration Level is: "
 				+ ((double) resultNoVIP / (riders.size() * .9)));
+		textOutput += "AM MODE:\n   Average (MEAN) Non-VIP Frustration Level is: "
+				+ ((double) resultNoVIP / (riders.size() * .9)) + '\n';
 
 		// Evening Mode
 		// Reset Starting Conditions
@@ -184,6 +228,7 @@ public class Controller {
 				elevator.setCurrentFloor(gen.nextInt(4) + 2);
 
 			System.out.println("ELEVATOR AT END: " + elevator);
+			textOutput += "ELEVATOR AT END: " + elevator + '\n';
 			// System.out.println(building[1]);
 		} while (currentRider < riders.size() || elevator.peek() != null || building[1].peek() != null
 				|| building[2].peek() != null || building[3].peek() != null || building[4].peek() != null);
@@ -202,10 +247,22 @@ public class Controller {
 
 		System.out.println(
 				"PM MODE:\n   Average (MEAN) Total Frustration Level is: " + ((double) result / riders.size()));
+		textOutput += "PM MODE:\n   Average (MEAN) Total Frustration Level is: " + ((double) result / riders.size())
+				+ '\n';
+
 		System.out.println(
 				"PM MODE:\n   Average (MEAN) VIP Frustration Level is: " + ((double) resultVIP / (riders.size() / 10)));
+		textOutput += "PM MODE:\n   Average (MEAN) VIP Frustration Level is: "
+				+ ((double) resultVIP / (riders.size() / 10)) + '\n';
+
 		System.out.println("PM MODE:\n   Average (MEAN) Non-VIP Frustration Level is: "
 				+ ((double) resultNoVIP / (riders.size() * .9)));
+		textOutput += "PM MODE:\n   Average (MEAN) Non-VIP Frustration Level is: "
+				+ ((double) resultNoVIP / (riders.size() * .9)) + '\n';
+
+		// puts the output in the GUI
+		output.setText(textOutput);
+
 	}
 
 	public static void addRiders(int quantity, int floor, ArrayList<ElevatorRider> list) {
