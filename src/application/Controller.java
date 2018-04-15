@@ -116,10 +116,12 @@ public class Controller {
 
 		// Make VIPs
 
-		float vipF = Integer.parseInt(vip.getText()) / 100;
-		for (int i = 0; i < riders.size() * vipF; i++) {
+		int vipI = Integer.parseInt(vip.getText());
+		for (int i = 0; i < riders.size() / vipI; i++) {
 			riders.get(i).promote();
 		}
+
+		textOutput += "\n\n\n" + vipI + "\n" + riders.size() + "\n\n\n";
 
 		Collections.shuffle(riders);
 
