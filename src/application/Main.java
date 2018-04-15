@@ -21,7 +21,7 @@ public class Main extends Application {
 
 		// just load fxml file and display it in the stage:
 
-		primaryStage.getIcons().add(new Image("file:icon.png"));
+		primaryStage.getIcons().add(new Image(ClassLoader.getSystemResourceAsStream("application/icon.png")));
 		primaryStage.setTitle("Elevator App");
 		FXMLLoader appLoad = new FXMLLoader(getClass().getResource("application.fxml"));
 		Parent root = appLoad.load();

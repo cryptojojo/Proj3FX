@@ -44,7 +44,7 @@ public class Controller {
 
 		Stage about = new Stage();
 
-		about.getIcons().add(new Image("file:icon.png"));
+		about.getIcons().add(new Image(ClassLoader.getSystemResourceAsStream("application/icon.png")));
 		about.setTitle("About Elevator App");
 		FXMLLoader appLoad = new FXMLLoader(getClass().getResource("about.fxml"));
 		Parent root = null;
