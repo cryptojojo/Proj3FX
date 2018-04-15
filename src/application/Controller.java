@@ -80,11 +80,11 @@ public class Controller {
 			textOutput += "NEED AN ENTRY FOR NUMBER OF RIDERS MAXIMUM\n";
 			notFilled = true;
 		}
-		if(vip.getText().isEmpty()) {
+		if (vip.getText().isEmpty()) {
 			textOutput += "NEED AN ENTRY FOR PERCENTAGE OF VIPS\n";
 			notFilled = true;
 		}
-		if(vip.getText().isEmpty()) {
+		if (vip.getText().isEmpty()) {
 			textOutput += "NEED AN ENTRY FOR PERCENTAGE OF VIPS\n";
 			notFilled = true;
 		}
@@ -274,6 +274,7 @@ public class Controller {
 
 		// puts the output in the GUI
 		output.setText(textOutput);
+		textOutput = "";
 
 	}
 
