@@ -27,9 +27,17 @@ public class Controller {
 	@FXML
 	private TextField numOfFloors;
 	@FXML
+	private TextField numOfRiders;
+	@FXML
 	private TextField numOfRidersMin;
 	@FXML
 	private TextField numOfRidersMax;
+	@FXML
+	private TextField numOfHomed;
+	@FXML
+	private TextField numOfHomedMin;
+	@FXML
+	private TextField numOfHomedMax;
 	@FXML
 	private TextField vip;
 
