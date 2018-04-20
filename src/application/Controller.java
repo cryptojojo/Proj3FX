@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.PriorityQueue;
 import java.util.Random;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -25,10 +28,28 @@ public class Controller {
 	// submit button
 	@FXML
 	private Button submitButton;
+	@FXML
+	private Button submitNumOfFloors;
+	@FXML
+	private Button submitRidersPerFloor;
+
+	// label (for setting visibility)
+	@FXML
+	private Label toNumOfRidersLabel;
+	@FXML
+	private Label numOfRidersLabel;
+	@FXML
+	private Label numOfRidersHomesLabel;
+	@FXML
+	private Label percentageOfVipsLabel;
+	@FXML
+	private Label percentLabel;
 
 	// text fields
 	@FXML
 	private TextField numOfFloors;
+	@FXML
+	private TextField numOfRidersStatic;
 	@FXML
 	private TextField numOfRidersMin;
 	@FXML
@@ -40,17 +61,123 @@ public class Controller {
 	@FXML
 	private TextArea output;
 
-	private String textOutput = "";
-	
+
 	// choice boxes
 	@FXML
 	private ChoiceBox numofRidersChoice;
+	@FXML
+	private ChoiceBox floorChoice;
 
-
+	
+	
+	// Non fxml variables
+	private String textOutput = "";
+	private Boolean numOfRidersIsRandom;
+	private int floors;
+	private int ridersPerFloor;
+	
+	
+	
 	@FXML
 	protected void initialize() {
 		numofRidersChoice.getItems().add("Random");
 		numofRidersChoice.getItems().add("Not Random");
+		numOfRidersMin.setVisible(false);
+		toNumOfRidersLabel.setVisible(false);
+		numOfRidersMax.setVisible(false);
+		numOfRidersStatic.setVisible(false);
+
+		numOfRidersLabel.setVisible(false);
+		numOfRidersHomesLabel.setVisible(false);
+		percentageOfVipsLabel.setVisible(false);
+		
+		numofRidersChoice.setVisible(false);
+		floorChoice.setVisible(false);
+		
+		percentLabel.setVisible(false);
+		vip.setVisible(false);
+		
+		
+		numofRidersChoice.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
+
+				if ((numofRidersChoice.getItems().get((Integer) number2) == "Random")) {
+					numOfRidersMin.setVisible(true);
+					toNumOfRidersLabel.setVisible(true);
+					numOfRidersMax.setVisible(true);
+					numOfRidersStatic.setVisible(false);
+					numOfRidersIsRandom = true;
+				}
+				
+				
+				if ((numofRidersChoice.getItems().get((Integer) number2) == "Not Random")) {
+					numOfRidersStatic.setVisible(true);
+					numOfRidersMin.setVisible(false);
+					toNumOfRidersLabel.setVisible(false);
+					numOfRidersMax.setVisible(false);
+					numOfRidersIsRandom = false;
+				}
+
+			}
+		});
+
+	}
+
+	@FXML
+	protected void handlenumofRidersChoice(ActionEvent event) {
+
+		System.out.print("Clicked");
+	}
+	
+	@FXML
+	protected void handleSubmitRidersPerFloor(ActionEvent event) {
+		
+	}
+	
+	@FXML
+	protected void handleSubmitNumOfFloors(ActionEvent event) {
+		
+		if (numOfFloors.getText().isEmpty()) {
+			output.setText("Must enter a number of floors");
+			return;
+		}
+		
+		if (Integer.parseInt(numOfFloors.getText()) > 10 ) {
+			output.setText("Thats a lot of floors! Enter a number between 1 and 10");
+			return;
+		}
+		
+		if (Integer.parseInt(numOfFloors.getText()) == 0 ) {
+			output.setText("A building can't have 0 floors! Enter a number between 1 and 10");
+			return;
+		}
+		
+		if (Integer.parseInt(numOfFloors.getText()) < 0 ) {
+			output.setText("A building can't have negative floors! Enter a number between 1 and 10");
+			return;
+		}
+		
+		this.floors = Integer.parseInt(numOfFloors.getText());
+		System.out.print(floors);
+		
+		output.setText("The building has " + floors + " floors!" );
+	
+		
+		
+		
+		
+		
+		numOfRidersLabel.setVisible(true);
+
+		
+		numofRidersChoice.setVisible(true);
+
+		
+		
+		
+		
+		
 	}
 
 	@FXML
@@ -58,8 +185,6 @@ public class Controller {
 
 		// check that everything is filled out
 
-
-		
 		Boolean notFilled = false;
 
 		if (numOfFloors.getText().isEmpty()) {
@@ -273,7 +398,7 @@ public class Controller {
 		textOutput = "";
 
 	}
-	
+
 	@FXML
 	protected void handleAbout(ActionEvent event) {
 
@@ -295,7 +420,6 @@ public class Controller {
 		about.show();
 
 	}
-	
 
 	public static void addRiders(int quantity, int floor, ArrayList<ElevatorRider> list) {
 		for (int i = 0; i < quantity; i++)
