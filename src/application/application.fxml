@@ -18,106 +18,44 @@
 				</Menu>
 			</menus>
 		</MenuBar>
-		<Pane prefHeight="663.0" prefWidth="640.0">
+		<Pane prefHeight="390.0" prefWidth="640.0">
 			<children>
 				<Label layoutX="14.0" layoutY="14.0" text="Number of Floors">
 					<font>
 						<Font size="16.0" />
 					</font>
 				</Label>
-				<TextField fx:id="numOfFloors" layoutX="158.0" layoutY="14.0" prefHeight="25.0" prefWidth="58.0" />
-				<Button fx:id="submitButton" layoutX="264.0" layoutY="499.0" mnemonicParsing="false" onAction="#handleSubmit" text="Submit">
+				<TextField fx:id="numOfFloors" layoutX="158.0" layoutY="14.0" prefHeight="25.0" prefWidth="34.0" />
+				<Button fx:id="submitButton" layoutX="284.0" layoutY="309.0" mnemonicParsing="false" onAction="#handleSubmit" text="Submit">
 					<font>
 						<Font size="16.0" />
 					</font>
 				</Button>
-            <Label layoutX="14.0" layoutY="52.0" text="Number of Riders to Add to The Queue:">
+            <Label layoutX="14.0" layoutY="52.0" text="Number of Riders added per floor">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="numOfRiders" layoutX="230.0" layoutY="114.0" prefHeight="25.0" prefWidth="124.0" />
-            <Label layoutX="17.0" layoutY="266.0" text="Percentage of VIP Riders">
+            <TextField fx:id="numOfRidersMin" layoutX="267.0" layoutY="52.0" prefHeight="25.0" prefWidth="34.0" />
+            <TextField fx:id="numOfRidersMax" layoutX="339.0" layoutY="52.0" prefHeight="25.0" prefWidth="34.0" />
+            <Label layoutX="310.0" layoutY="52.0" text="to">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label layoutX="253.0" layoutY="287.0" text="Percent VIP ">
+            <Label layoutX="13.0" layoutY="86.0" text="Percentage of riders which are VIP">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label layoutX="427.0" layoutY="65.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label layoutX="489.0" layoutY="89.0" text="Random">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label layoutX="230.0" layoutY="89.0" text="Number of Riders">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <TextField fx:id="numOfRidersMax" layoutX="547.0" layoutY="114.0" prefHeight="25.0" prefWidth="58.0" />
-            <Label layoutX="408.0" layoutY="114.0" text="From:">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label layoutX="519.0" layoutY="114.0" text="To:">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <ChoiceBox layoutX="25.0" layoutY="114.0" prefWidth="150.0" />
-            <Label layoutX="15.0" layoutY="163.0" text="Number of Riders Homed on Each Floor:">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <ChoiceBox layoutX="26.0" layoutY="217.0" prefWidth="150.0" />
-            <Label layoutX="428.0" layoutY="168.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label layoutX="231.0" layoutY="192.0" text="Number of Riders">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <TextField fx:id="numOfHomed" layoutX="230.0" layoutY="217.0" prefHeight="25.0" prefWidth="124.0" />
-            <ChoiceBox layoutX="25.0" layoutY="312.0" prefWidth="150.0" />
-            <TextField fx:id="vip" layoutX="230.0" layoutY="312.0" prefHeight="25.0" prefWidth="124.0" />
-            <Label layoutX="359.0" layoutY="312.0" text="\%">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <TextField fx:id="numOfRidersMin" layoutX="451.0" layoutY="114.0" prefHeight="25.0" prefWidth="58.0" />
-            <TextField fx:id="numOfHomedMin" layoutX="454.0" layoutY="217.0" prefHeight="25.0" prefWidth="58.0" />
-            <Label layoutX="522.0" layoutY="217.0" text="To:">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <TextField fx:id="numOfHomedMax" layoutX="550.0" layoutY="217.0" prefHeight="25.0" prefWidth="58.0" />
-            <Label layoutX="492.0" layoutY="192.0" text="Random">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label layoutX="411.0" layoutY="217.0" text="From:">
+            <TextField fx:id="vip" layoutX="267.0" layoutY="86.0" prefHeight="25.0" prefWidth="34.0" />
+            <Label layoutX="311.0" layoutY="85.0" text="\%">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
 			</children>
 		</Pane>
-      <TextArea fx:id="output" prefHeight="304.0" prefWidth="640.0" />
+      <TextArea fx:id="output" prefHeight="366.0" prefWidth="640.0" />
 	</children>
 </VBox>
