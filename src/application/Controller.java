@@ -35,6 +35,8 @@ public class Controller {
 	private Button submitRidersPerFloor;
 	@FXML
 	private Button submitHomedPerFloor;
+	@FXML
+	private Button resetButton;
 
 	// label (for setting visibility)
 	@FXML
@@ -47,8 +49,7 @@ public class Controller {
 	private Label numOfRidersHomesLabel;
 	@FXML
 	private Label percentageOfVipsLabel;
-	@FXML
-	private Label percentLabel;
+
 	@FXML
 	private Label currentFloorLabel;
 
@@ -67,8 +68,6 @@ public class Controller {
 	private TextField numOfHomedMin;
 	@FXML
 	private TextField numOfHomedMax;
-	@FXML
-	private TextField vip;
 
 	// text output to GUI
 	@FXML
@@ -85,10 +84,14 @@ public class Controller {
 	private Boolean numOfRidersIsRandom;
 	private Boolean numOfHomedIsRandom;
 	private int floors;
+	private int currentFloor = 0;
 	private int ridersPerFloor;
+	private HashMap<Integer, Integer> homedPerFloor = new HashMap<>();
 
 	@FXML
 	protected void initialize() {
+
+		resetButton.setVisible(false);
 
 		submitButton.setVisible(false);
 
@@ -107,8 +110,7 @@ public class Controller {
 		numOfRidersHomesLabel.setVisible(false);
 		percentageOfVipsLabel.setVisible(false);
 		numofRidersChoice.setVisible(false);
-		percentLabel.setVisible(false);
-		vip.setVisible(false);
+
 		submitRidersPerFloor.setVisible(false);
 		currentFloorLabel.setVisible(false);
 		numofHomedChoice.setVisible(false);
@@ -138,6 +140,39 @@ public class Controller {
 			}
 		});
 
+		numofHomedChoice.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
+
+				if ((numofRidersChoice.getItems().get((Integer) number2) == "Random")) {
+					numOfHomedMin.setVisible(true);
+					toNumOfHomedLabel.setVisible(true);
+					numOfHomedMax.setVisible(true);
+					numOfHomedStatic.setVisible(false);
+					submitHomedPerFloor.setVisible(true);
+					numOfHomedIsRandom = true;
+				}
+
+				if ((numofRidersChoice.getItems().get((Integer) number2) == "Not Random")) {
+					numOfHomedStatic.setVisible(true);
+					numOfHomedMin.setVisible(false);
+					toNumOfHomedLabel.setVisible(false);
+					numOfHomedMax.setVisible(false);
+					submitHomedPerFloor.setVisible(true);
+					numOfHomedIsRandom = false;
+				}
+
+			}
+		});
+
+	}
+
+	@FXML
+	protected void handleVipButton(ActionEvent event) {
+		/**
+		 * if (vip.getText().isEmpty()) { output.setText("Must enter percentage of
+		 * VIPs!"); return; }
+		 **/
 	}
 
 	@FXML
@@ -199,101 +234,92 @@ public class Controller {
 		numofHomedChoice.getItems().add("Random");
 		numofHomedChoice.getItems().add("Not Random");
 
-		handleHomedRand();
-
 	}
 
-	private void handleHomedRand() {
+	@FXML
+	protected void handleSubmitHomedPerFloor() {
 
-		numofHomedChoice.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
+		if (numOfHomedIsRandom) {
 
-				if ((numofRidersChoice.getItems().get((Integer) number2) == "Random")) {
-					numOfHomedMin.setVisible(true);
-					toNumOfHomedLabel.setVisible(true);
-					numOfHomedMax.setVisible(true);
-					numOfHomedStatic.setVisible(false);
-					submitHomedPerFloor.setVisible(true);
-					numOfHomedIsRandom = true;
-				}
-
-				if ((numofRidersChoice.getItems().get((Integer) number2) == "Not Random")) {
-					numOfHomedStatic.setVisible(true);
-					numOfHomedMin.setVisible(false);
-					toNumOfHomedLabel.setVisible(false);
-					numOfHomedMax.setVisible(false);
-					submitHomedPerFloor.setVisible(true);
-					numOfHomedIsRandom = false;
-				}
-
+			if (numOfHomedMin.getText().isEmpty() || numOfHomedMax.getText().isEmpty()) {
+				output.setText("Must enter minimum and maximum numbers!");
+				return;
 			}
-		});
-
-		HashMap<Integer, Integer> homedPerFloor = new HashMap<>();
-
-		for (int i = 0; i < this.floors; i++) {
-
-			if (numOfHomedIsRandom) {
-
-				if (numOfHomedMin.getText().isEmpty() || numOfHomedMax.getText().isEmpty()) {
-					output.setText("Must enter minimum and maximum numbers!");
-					return;
-				}
-				if (Integer.parseInt(numOfHomedMin.getText()) < 0 || Integer.parseInt(numOfHomedMax.getText()) < 0) {
-					output.setText("Can't have negative passengers!");
-					return;
-				}
-
-				if (Integer.parseInt(numOfHomedMin.getText()) > Integer.parseInt(numOfHomedMax.getText())) {
-					output.setText("The minimum number cannot be greater than the maximum number!");
-					return;
-				}
-				if (Integer.parseInt(numOfHomedMax.getText()) > 500) {
-					output.setText("That's too many people! Chose a maximum number less than 500");
-					return;
-				}
-
-				int min = Integer.parseInt(numOfHomedMin.getText());
-				int max = Integer.parseInt(numOfHomedMax.getText());
-
-				Random r = new Random();
-
-				int ranValue = r.nextInt((max - min) + 1) + min;
-
-				homedPerFloor.put(i, ranValue);
-
-				textOutput += "There will be " + ranValue + " riders homed on floor " + i + '\n';
-
-				output.setText(textOutput);
-
-				// output.setText("There will be " + ridersPerFloor + " riders added to elevator
-				// per floor");
-
+			if (Integer.parseInt(numOfHomedMin.getText()) < 0 || Integer.parseInt(numOfHomedMax.getText()) < 0) {
+				output.setText("Can't have negative passengers!");
+				return;
 			}
 
-			if (!numOfHomedIsRandom) {
-
-				if (numOfHomedStatic.getText().isEmpty()) {
-					output.setText("Must enter a number of passengers!");
-					return;
-				}
-				if (Integer.parseInt(numOfHomedStatic.getText()) < 0) {
-					output.setText("Can't have negative passengers!");
-					return;
-				}
-				if (Integer.parseInt(numOfHomedStatic.getText()) > 500) {
-					output.setText("That's too many people! Chose a number less than 500");
-					return;
-				}
-
-				int staticValue = Integer.parseInt(numOfHomedStatic.getText());
-
-				homedPerFloor.put(i, staticValue);
-
-				textOutput += "There will be " + staticValue + " riders homed on floor " + i + '\n';
-
+			if (Integer.parseInt(numOfHomedMin.getText()) > Integer.parseInt(numOfHomedMax.getText())) {
+				output.setText("The minimum number cannot be greater than the maximum number!");
+				return;
 			}
+			if (Integer.parseInt(numOfHomedMax.getText()) > 500) {
+				output.setText("That's too many people! Chose a maximum number less than 500");
+				return;
+			}
+
+			int min = Integer.parseInt(numOfHomedMin.getText());
+			int max = Integer.parseInt(numOfHomedMax.getText());
+
+			Random r = new Random();
+
+			int ranValue = r.nextInt((max - min) + 1) + min;
+
+			homedPerFloor.put(currentFloor, ranValue);
+
+			textOutput += "There will be " + ranValue + " riders homed on floor " + currentFloor + '\n';
+
+			output.setText(textOutput);
+
+			currentFloor++;
+
+			currentFloorLabel.setText("" + currentFloor);
+
+			// output.setText("There will be " + ridersPerFloor + " riders added to elevator
+			// per floor");
+
+		}
+
+		if (!numOfHomedIsRandom) {
+
+			if (numOfHomedStatic.getText().isEmpty()) {
+				output.setText("Must enter a number of passengers!");
+				return;
+			}
+			if (Integer.parseInt(numOfHomedStatic.getText()) < 0) {
+				output.setText("Can't have negative passengers!");
+				return;
+			}
+			if (Integer.parseInt(numOfHomedStatic.getText()) > 500) {
+				output.setText("That's too many people! Chose a number less than 500");
+				return;
+			}
+
+			int staticValue = Integer.parseInt(numOfHomedStatic.getText());
+
+			homedPerFloor.put(currentFloor, staticValue);
+
+			textOutput += "There will be " + staticValue + " riders homed on floor " + currentFloor + '\n';
+
+			output.setText(textOutput);
+
+			currentFloor++;
+
+			currentFloorLabel.setText("" + currentFloor);
+		}
+
+		if (this.currentFloor == this.floors + 1) {
+
+			submitHomedPerFloor.setVisible(false);
+
+			percentageOfVipsLabel.setVisible(true);
+
+			System.out.print(homedPerFloor);
+
+			currentFloorLabel.setText("" + (currentFloor - 1));
+
+			return;
 
 		}
 
@@ -487,6 +513,8 @@ public class Controller {
 				"PM MODE:\n\tAverage (MEAN) VIP Frustration Level is: " + ((double) resultVIP / (riders.size() / 10)));
 		System.out.println("PM MODE:\n\tAverage (MEAN) Non-VIP Frustration Level is: "
 				+ ((double) resultNoVIP / (riders.size() * .9)));
+
+		resetButton.setVisible(true);
 
 	}
 
