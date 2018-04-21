@@ -106,6 +106,13 @@ public class Controller {
 	@FXML
 	protected void initialize() {
 
+		numofRidersChoice.getItems().add("Random");
+		numofRidersChoice.getItems().add("Not Random");
+		vipChoice.getItems().add("Random");
+		vipChoice.getItems().add("Not Random");
+		numofHomedChoice.getItems().add("Random");
+		numofHomedChoice.getItems().add("Not Random");
+
 		submitNumOfFloors.setVisible(true);
 		resetButton.setVisible(false);
 		submitButton.setVisible(false);
@@ -326,8 +333,6 @@ public class Controller {
 		numOfRidersHomesLabel.setVisible(true);
 		currentFloorLabel.setVisible(true);
 		numofHomedChoice.setVisible(true);
-		numofHomedChoice.getItems().add("Random");
-		numofHomedChoice.getItems().add("Not Random");
 
 	}
 
@@ -413,9 +418,6 @@ public class Controller {
 
 			System.out.print(homedPerFloor);
 
-			vipChoice.getItems().add("Random");
-			vipChoice.getItems().add("Not Random");
-
 			currentFloorLabel.setText("" + (currentFloor - 1));
 
 			return;
@@ -452,9 +454,6 @@ public class Controller {
 
 		output.setText("The building has " + floors + " floors!");
 
-		numofRidersChoice.getItems().add("Random");
-		numofRidersChoice.getItems().add("Not Random");
-
 		numOfRidersLabel.setVisible(true);
 		numofRidersChoice.setVisible(true);
 
@@ -478,17 +477,21 @@ public class Controller {
 		textOutput = "RESULTS: \n";
 
 		// Setup Building
-		PriorityQueue<ElevatorRider>[] building = new PriorityQueue[5];
+		PriorityQueue<ElevatorRider>[] building = new PriorityQueue[floors];
 		for (int i = 0; i < building.length; i++)
 			building[i] = new PriorityQueue();
 
 		// Setup riders
 		ArrayList<ElevatorRider> riders = new ArrayList();
 
-		addRiders(110, 5, riders);
-		addRiders(75, 4, riders);
-		addRiders(65, 3, riders);
-		addRiders(100, 2, riders);
+		for (int i = 2; i < floors; i++) {
+			addRiders(homedPerFloor.get(i), i, riders);
+		}
+
+		// addRiders(110, 5, riders);
+		// addRiders(75, 4, riders);
+		// addRiders(65, 3, riders);
+		// addRiders(100, 2, riders);
 
 		Collections.shuffle(riders);
 
@@ -509,11 +512,12 @@ public class Controller {
 
 		// Morning Mode
 		int currentRider = 0;
+
 		do {
 			// New rider!
 			if (currentRider < riders.size()) {
 				// 10 new riders
-				for (int index = 0; index < 10; index++) {
+				for (int index = 0; index < ridersPerFloor; index++) {
 					building[0].add(riders.get(currentRider++));
 				}
 			}
