@@ -259,11 +259,11 @@ public class Controller {
 
 				Random r = new Random();
 
-				int currValue = r.nextInt((max - min) + 1) + min;
+				int ranValue = r.nextInt((max - min) + 1) + min;
 
-				homedPerFloor.put(i, currValue);
+				homedPerFloor.put(i, ranValue);
 
-				textOutput += "There will be " + currValue + " riders homed on floor " + i + '\n';
+				textOutput += "There will be " + ranValue + " riders homed on floor " + i + '\n';
 
 				output.setText(textOutput);
 
@@ -273,6 +273,25 @@ public class Controller {
 			}
 
 			if (!numOfHomedIsRandom) {
+
+				if (numOfHomedStatic.getText().isEmpty()) {
+					output.setText("Must enter a number of passengers!");
+					return;
+				}
+				if (Integer.parseInt(numOfHomedStatic.getText()) < 0) {
+					output.setText("Can't have negative passengers!");
+					return;
+				}
+				if (Integer.parseInt(numOfHomedStatic.getText()) > 500) {
+					output.setText("That's too many people! Chose a number less than 500");
+					return;
+				}
+
+				int staticValue = Integer.parseInt(numOfHomedStatic.getText());
+
+				homedPerFloor.put(i, staticValue);
+
+				textOutput += "There will be " + staticValue + " riders homed on floor " + i + '\n';
 
 			}
 
