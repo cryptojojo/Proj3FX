@@ -36,6 +36,8 @@ public class Controller {
 	@FXML
 	private Button submitHomedPerFloor;
 	@FXML
+	private Button submitVip;
+	@FXML
 	private Button resetButton;
 
 	// label (for setting visibility)
@@ -43,6 +45,8 @@ public class Controller {
 	private Label toNumOfRidersLabel;
 	@FXML
 	private Label toNumOfHomedLabel;
+	@FXML
+	private Label toVipPercentage;
 	@FXML
 	private Label numOfRidersLabel;
 	@FXML
@@ -69,6 +73,13 @@ public class Controller {
 	@FXML
 	private TextField numOfHomedMax;
 
+	@FXML
+	private TextField vipPercentStatic;
+	@FXML
+	private TextField vipPercentMin;
+	@FXML
+	private TextField vipPercentMax;
+
 	// text output to GUI
 	@FXML
 	private TextArea output;
@@ -78,11 +89,14 @@ public class Controller {
 	private ChoiceBox numofRidersChoice;
 	@FXML
 	private ChoiceBox numofHomedChoice;
+	@FXML
+	private ChoiceBox vipChoice;
 
 	// Non fxml variables
 	private String textOutput = "";
 	private Boolean numOfRidersIsRandom;
 	private Boolean numOfHomedIsRandom;
+	private Boolean vipPercentIsRandom;
 	private int floors;
 	private int currentFloor = 0;
 	private int ridersPerFloor;
@@ -92,8 +106,8 @@ public class Controller {
 	protected void initialize() {
 
 		resetButton.setVisible(false);
-
 		submitButton.setVisible(false);
+		vipChoice.setVisible(false);
 
 		numOfRidersMin.setVisible(false);
 		toNumOfRidersLabel.setVisible(false);
@@ -114,6 +128,37 @@ public class Controller {
 		submitRidersPerFloor.setVisible(false);
 		currentFloorLabel.setVisible(false);
 		numofHomedChoice.setVisible(false);
+
+		vipPercentMin.setVisible(false);
+		vipPercentMax.setVisible(false);
+		vipPercentStatic.setVisible(false);
+		toVipPercentage.setVisible(false);
+		submitVip.setVisible(false);
+
+		vipChoice.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
+
+				if ((vipChoice.getItems().get((Integer) number2) == "Random")) {
+					vipPercentMin.setVisible(true);
+					toVipPercentage.setVisible(true);
+					vipPercentMax.setVisible(true);
+					vipPercentStatic.setVisible(false);
+					submitVip.setVisible(true);
+					vipPercentIsRandom = true;
+				}
+
+				if ((vipChoice.getItems().get((Integer) number2) == "Not Random")) {
+					vipPercentStatic.setVisible(true);
+					vipPercentMin.setVisible(false);
+					toVipPercentage.setVisible(false);
+					vipPercentMax.setVisible(false);
+					submitVip.setVisible(true);
+					vipPercentIsRandom = false;
+				}
+
+			}
+		});
 
 		numofRidersChoice.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 			@Override
@@ -314,8 +359,12 @@ public class Controller {
 			submitHomedPerFloor.setVisible(false);
 
 			percentageOfVipsLabel.setVisible(true);
+			vipChoice.setVisible(true);
 
 			System.out.print(homedPerFloor);
+
+			vipChoice.getItems().add("Random");
+			vipChoice.getItems().add("Not Random");
 
 			currentFloorLabel.setText("" + (currentFloor - 1));
 
