@@ -98,6 +98,7 @@ public class Controller {
 	private Boolean numOfHomedIsRandom;
 	private Boolean vipPercentIsRandom;
 	private int floors;
+	private int vipPercent;
 	private int currentFloor = 0;
 	private int ridersPerFloor;
 	private HashMap<Integer, Integer> homedPerFloor = new HashMap<>();
@@ -105,6 +106,7 @@ public class Controller {
 	@FXML
 	protected void initialize() {
 
+		submitNumOfFloors.setVisible(true);
 		resetButton.setVisible(false);
 		submitButton.setVisible(false);
 		vipChoice.setVisible(false);
@@ -134,31 +136,6 @@ public class Controller {
 		vipPercentStatic.setVisible(false);
 		toVipPercentage.setVisible(false);
 		submitVip.setVisible(false);
-
-		vipChoice.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-
-				if ((vipChoice.getItems().get((Integer) number2) == "Random")) {
-					vipPercentMin.setVisible(true);
-					toVipPercentage.setVisible(true);
-					vipPercentMax.setVisible(true);
-					vipPercentStatic.setVisible(false);
-					submitVip.setVisible(true);
-					vipPercentIsRandom = true;
-				}
-
-				if ((vipChoice.getItems().get((Integer) number2) == "Not Random")) {
-					vipPercentStatic.setVisible(true);
-					vipPercentMin.setVisible(false);
-					toVipPercentage.setVisible(false);
-					vipPercentMax.setVisible(false);
-					submitVip.setVisible(true);
-					vipPercentIsRandom = false;
-				}
-
-			}
-		});
 
 		numofRidersChoice.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 			@Override
@@ -210,14 +187,87 @@ public class Controller {
 			}
 		});
 
+		vipChoice.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
+
+				if ((vipChoice.getItems().get((Integer) number2) == "Random")) {
+					vipPercentMin.setVisible(true);
+					toVipPercentage.setVisible(true);
+					vipPercentMax.setVisible(true);
+					vipPercentStatic.setVisible(false);
+					submitVip.setVisible(true);
+					vipPercentIsRandom = true;
+				}
+
+				if ((vipChoice.getItems().get((Integer) number2) == "Not Random")) {
+					vipPercentStatic.setVisible(true);
+					vipPercentMin.setVisible(false);
+					toVipPercentage.setVisible(false);
+					vipPercentMax.setVisible(false);
+					submitVip.setVisible(true);
+					vipPercentIsRandom = false;
+				}
+
+			}
+		});
+
 	}
 
 	@FXML
 	protected void handleVipButton(ActionEvent event) {
-		/**
-		 * if (vip.getText().isEmpty()) { output.setText("Must enter percentage of
-		 * VIPs!"); return; }
-		 **/
+
+		if (vipPercentIsRandom) {
+			if (vipPercentMin.getText().isEmpty() || vipPercentMax.getText().isEmpty()) {
+				output.setText("Must enter minimum and maximum numbers!");
+				return;
+			}
+			if (Integer.parseInt(vipPercentMin.getText()) < 0 || Integer.parseInt(vipPercentMax.getText()) < 0) {
+				output.setText("Can't have negative percent!");
+				return;
+			}
+
+			if (Integer.parseInt(vipPercentMin.getText()) > 100 || Integer.parseInt(vipPercentMax.getText()) > 100) {
+				output.setText("Can't be over 100 percent!");
+				return;
+			}
+
+			if (Integer.parseInt(vipPercentMin.getText()) > Integer.parseInt(vipPercentMax.getText())) {
+				output.setText("The minimum number cannot be greater than the maximum number!");
+				return;
+			}
+
+			int min = Integer.parseInt(vipPercentMin.getText());
+			int max = Integer.parseInt(vipPercentMax.getText());
+
+			Random r = new Random();
+			vipPercent = r.nextInt((max - min) + 1) + min;
+
+		}
+
+		if (!vipPercentIsRandom) {
+
+			if (vipPercentStatic.getText().isEmpty()) {
+				output.setText("Must enter a percentage!");
+				return;
+			}
+			if (Integer.parseInt(vipPercentStatic.getText()) < 0) {
+				output.setText("Can't have negative percent!");
+				return;
+			}
+			if (Integer.parseInt(vipPercentStatic.getText()) > 100) {
+				output.setText("Can't be over 100 percent!");
+				return;
+			}
+
+			vipPercent = Integer.parseInt(vipPercentStatic.getText());
+
+		}
+
+		output.setText(vipPercent + "% of riders are VIPs");
+
+		submitButton.setVisible(true);
+
 	}
 
 	@FXML
@@ -413,6 +463,8 @@ public class Controller {
 	@FXML
 	protected void handleSubmit(ActionEvent event) {
 
+		textOutput = "RESULTS: \n";
+
 		// Setup Building
 		PriorityQueue<ElevatorRider>[] building = new PriorityQueue[5];
 		for (int i = 0; i < building.length; i++)
@@ -491,10 +543,20 @@ public class Controller {
 		}
 
 		System.out.println("AM MODE:\n\tAverage (MEAN) Frustration Level is: " + ((double) result / riders.size()));
+
+		textOutput += "(AM Mode): Average (MEAN) Frustration Level is: " + ((double) result / riders.size()) + "\n";
+
 		System.out.println(
 				"AM MODE:\n\tAverage (MEAN) VIP Frustration Level is: " + ((double) resultVIP / (riders.size() / 10)));
+
+		textOutput += "(AM Mode): Average (MEAN) VIP Frustration Level is: "
+				+ ((double) resultVIP / (riders.size() / 10)) + "\n";
+
 		System.out.println("AM MODE:\n\tAverage (MEAN) Non-VIP Frustration Level is: "
 				+ ((double) resultNoVIP / (riders.size() * .9)));
+
+		textOutput += "(AM Mode): Average (MEAN) Non-VIP Frustration Level is: "
+				+ ((double) resultNoVIP / (riders.size() / 10)) + "\n";
 
 		// Evening Mode
 		// Reset Starting Conditions
@@ -562,6 +624,8 @@ public class Controller {
 				"PM MODE:\n\tAverage (MEAN) VIP Frustration Level is: " + ((double) resultVIP / (riders.size() / 10)));
 		System.out.println("PM MODE:\n\tAverage (MEAN) Non-VIP Frustration Level is: "
 				+ ((double) resultNoVIP / (riders.size() * .9)));
+
+		output.setText(textOutput);
 
 		resetButton.setVisible(true);
 
