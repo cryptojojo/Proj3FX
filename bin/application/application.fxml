@@ -7,7 +7,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<VBox prefHeight="778.0" prefWidth="829.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<VBox prefHeight="612.0" prefWidth="829.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
 	<children>
 		<MenuBar prefHeight="0.0" prefWidth="629.0" VBox.vgrow="NEVER">
 			<menus>
@@ -89,6 +89,6 @@
             <Button fx:id="submitVip" layoutX="567.0" layoutY="206.0" mnemonicParsing="false" onAction="#handleVipButton" text="Ok" />
 			</children>
 		</Pane>
-      <TextArea fx:id="output" prefHeight="366.0" prefWidth="640.0" />
+      <TextArea fx:id="output" prefHeight="200.0" prefWidth="829.0" />
 	</children>
 </VBox>

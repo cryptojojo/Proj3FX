@@ -432,8 +432,8 @@ public class Controller {
 			return;
 		}
 
-		if (Integer.parseInt(numOfFloors.getText()) > 10) {
-			output.setText("Thats a lot of floors! Enter a number between 1 and 10");
+		if (Integer.parseInt(numOfFloors.getText()) > 50) {
+			output.setText("Thats a lot of floors! Enter a number between 1 and 50");
 			return;
 		}
 
@@ -463,6 +463,18 @@ public class Controller {
 	@FXML
 	protected void handleSubmit(ActionEvent event) {
 
+		/**
+		 * Variables from user:
+		 * 
+		 * floors (int)
+		 * 
+		 * vipPercent (int)
+		 * 
+		 * ridersPerFloor (int)
+		 * 
+		 * homedPerFloor (HashMap<floor(int), people homed at that floor (int) >)
+		 */
+
 		textOutput = "RESULTS: \n";
 
 		// Setup Building
@@ -472,10 +484,12 @@ public class Controller {
 
 		// Setup riders
 		ArrayList<ElevatorRider> riders = new ArrayList();
+
 		addRiders(110, 5, riders);
 		addRiders(75, 4, riders);
 		addRiders(65, 3, riders);
 		addRiders(100, 2, riders);
+
 		Collections.shuffle(riders);
 
 		// Make VIPs
@@ -558,75 +572,7 @@ public class Controller {
 		textOutput += "(AM Mode): Average (MEAN) Non-VIP Frustration Level is: "
 				+ ((double) resultNoVIP / (riders.size() / 10)) + "\n";
 
-		// Evening Mode
-		// Reset Starting Conditions
-		currentRider = 0;
-		for (int i = 0; i < riders.size(); i++)
-			riders.get(i).setFrustration(0);
-		for (int i = 0; i < building.length; i++)
-			while (!building[i].isEmpty())
-				building[i].remove();
-		do {
-			// New rider!
-			if (currentRider < riders.size()) {
-				// 10 new riders
-				for (int index = 0; index < 10; index++) {
-					building[riders.get(currentRider).getHomeFloor() - 1].add(riders.get(currentRider));
-					riders.get(currentRider).setHomeFloor(1);
-					currentRider++;
-				}
-			}
-
-			// Pop riders for elevator's current floor
-			while (elevator.peek() != null && elevator.peek().getHomeFloor() == elevator.getCurrentFloor()) {
-				building[elevator.getCurrentFloor() - 1].add(elevator.pop());
-			}
-
-			// System.out.println("AFTER POPS" + elevator);
-
-			// Frustrate
-			elevator.frustrate();
-
-			// Push riders from current floor to elevator
-			while (elevator.getCurrentFloor() != 1 && !elevator.isFull()
-					&& !building[elevator.getCurrentFloor() - 1].isEmpty())
-				elevator.push(building[elevator.getCurrentFloor() - 1].remove());
-
-			// System.out.println("ELEVATOR BEFORE MOVE: " + elevator);
-
-			// Move elevator
-			Random gen = new Random();
-			if (elevator.peek() != null)
-				elevator.setCurrentFloor(elevator.peek().getHomeFloor());
-			else
-				elevator.setCurrentFloor(gen.nextInt(4) + 2);
-
-			System.out.println("ELEVATOR AT END: " + elevator);
-			// System.out.println(building[1]);
-		} while (currentRider < riders.size() || elevator.peek() != null || building[1].peek() != null
-				|| building[2].peek() != null || building[3].peek() != null || building[4].peek() != null);
-
-		// Output
-		result = 0;
-		resultVIP = 0;
-		resultNoVIP = 0;
-		for (ElevatorRider rider : riders) {
-			result += rider.getFrustration();
-			if (rider.isVIP())
-				resultVIP += rider.getFrustration();
-			else
-				resultNoVIP += rider.getFrustration();
-		}
-
-		System.out
-				.println("PM MODE:\n\tAverage (MEAN) Total Frustration Level is: " + ((double) result / riders.size()));
-		System.out.println(
-				"PM MODE:\n\tAverage (MEAN) VIP Frustration Level is: " + ((double) resultVIP / (riders.size() / 10)));
-		System.out.println("PM MODE:\n\tAverage (MEAN) Non-VIP Frustration Level is: "
-				+ ((double) resultNoVIP / (riders.size() * .9)));
-
 		output.setText(textOutput);
-
 		resetButton.setVisible(true);
 
 	}
