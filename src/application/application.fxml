@@ -25,7 +25,7 @@
 						<Font size="16.0" />
 					</font>
 				</Label>
-				<TextField fx:id="numOfFloors" layoutX="158.0" layoutY="14.0" prefHeight="25.0" prefWidth="34.0" />
+				<TextField fx:id="numOfFloors" layoutX="297.0" layoutY="14.0" prefHeight="25.0" prefWidth="34.0" />
 				<Button fx:id="submitButton" layoutX="284.0" layoutY="309.0" mnemonicParsing="false" onAction="#handleSubmit" text="Submit">
 					<font>
 						<Font size="16.0" />
@@ -36,9 +36,9 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="numOfRidersMin" layoutX="415.0" layoutY="74.0" prefHeight="25.0" prefWidth="34.0" />
-            <TextField fx:id="numOfRidersMax" layoutX="487.0" layoutY="74.0" prefHeight="25.0" prefWidth="34.0" />
-            <Label fx:id="toNumOfRidersLabel" layoutX="458.0" layoutY="74.0" text="to">
+            <TextField fx:id="numOfRidersMin" layoutX="436.0" layoutY="74.0" prefHeight="25.0" prefWidth="34.0" />
+            <TextField fx:id="numOfRidersMax" layoutX="508.0" layoutY="74.0" prefHeight="25.0" prefWidth="34.0" />
+            <Label fx:id="toNumOfRidersLabel" layoutX="479.0" layoutY="74.0" text="to">
                <font>
                   <Font size="16.0" />
                </font>
@@ -48,22 +48,36 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="vip" layoutX="278.0" layoutY="206.0" prefHeight="25.0" prefWidth="34.0" />
-            <Label fx:id="percentLabel" layoutX="321.0" layoutY="206.0" text="\%">
+            <TextField fx:id="vip" layoutX="303.0" layoutY="206.0" prefHeight="25.0" prefWidth="34.0" />
+            <Label fx:id="percentLabel" layoutX="346.0" layoutY="206.0" text="\%">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="numofRidersChoice" layoutX="301.0" layoutY="74.0" onMouseClicked="#handlenumofRidersChoice" prefHeight="25.0" prefWidth="72.0" />
-            <TextField fx:id="numOfRidersStatic" layoutX="442.0" layoutY="74.0" prefHeight="25.0" prefWidth="52.0" />
+            <ChoiceBox fx:id="numofRidersChoice" layoutX="297.0" layoutY="74.0" prefHeight="25.0" prefWidth="118.0" />
+            <TextField fx:id="numOfRidersStatic" layoutX="463.0" layoutY="74.0" prefHeight="25.0" prefWidth="52.0" />
             <Label fx:id="numOfRidersHomesLabel" layoutX="16.0" layoutY="144.0" text="Number of Riders Homed on Floor">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="floorChoice" layoutX="301.0" layoutY="144.0" prefHeight="25.0" prefWidth="72.0" />
-            <Button fx:id="submitNumOfFloors" layoutX="214.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleSubmitNumOfFloors" text="Ok" />
-            <Button fx:id="submitRidersPerFloor" layoutX="546.0" layoutY="74.0" mnemonicParsing="false" onAction="#handleSubmitRidersPerFloor" text="Ok" />
+            <Button fx:id="submitNumOfFloors" layoutX="353.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleSubmitNumOfFloors" text="Ok" />
+            <Button fx:id="submitRidersPerFloor" layoutX="567.0" layoutY="74.0" mnemonicParsing="false" onAction="#handleSubmitRidersPerFloor" text="Ok" />
+            <Label fx:id="currentFloorLabel" layoutX="269.0" layoutY="144.0" prefHeight="25.0" prefWidth="31.0" text="0" textFill="RED">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="numofHomedChoice" layoutX="297.0" layoutY="144.0" prefHeight="25.0" prefWidth="118.0" />
+            <Label fx:id="toNumOfHomedLabel" layoutX="486.0" layoutY="144.0" text="to">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="numOfHomedMin" layoutX="436.0" layoutY="144.0" prefHeight="25.0" prefWidth="34.0" />
+            <TextField fx:id="numOfHomedMax" layoutX="508.0" layoutY="144.0" prefHeight="25.0" prefWidth="34.0" />
+            <TextField fx:id="numOfHomedStatic" layoutX="463.0" layoutY="144.0" prefHeight="25.0" prefWidth="52.0" />
+            <Button fx:id="submitHomedPerFloor" layoutX="567.0" layoutY="144.0" mnemonicParsing="false" text="Ok" />
 			</children>
 		</Pane>
       <TextArea fx:id="output" prefHeight="366.0" prefWidth="640.0" />
